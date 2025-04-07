@@ -73,7 +73,7 @@ icon.classList = ('absolute top-0 right-0 w-1/2 h-1/2');
 const themeToggleButton = document.getElementById('theme-toggle');
 
 // Définir les deux thèmes
-const themes = ['pastel', 'black'];
+const themes = ['bumblebee', 'business'];
 let currentThemeIndex = 0;
 
 // Charger le thème depuis localStorage (si disponible)
