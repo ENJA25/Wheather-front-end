@@ -1,32 +1,20 @@
 import './style.css'
-import { Analytics, trackEvent } from '@vercel/analytics/next';
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Component {...pageProps} />
-      <Analytics />
-    </>
-  );
-}
-
-export default MyApp;
-
-const root = document.querySelector('#app');
-const cityInput = document.querySelector('#city');
-const submit = document.querySelector('#submit');
-const reset = document.querySelector('#reset');
-const ville = document.createElement('h1');
-ville.classList = ('text-4xl font-bold');
-const temperature = document.createElement('h2');
-temperature.classList = ('font-bold');
-const description = document.createElement('h2');
-description.classList = ('text-xl font-bold');
-const windSpeed = document.createElement('h2');
-windSpeed.classList = ('font-bold');
-const humidity = document.createElement('h2');
-humidity.classList = ('font-bold');
-const icon = document.createElement('img');
+  const root = document.querySelector('#app');
+  const cityInput = document.querySelector('#city');
+  const submit = document.querySelector('#submit');
+  const reset = document.querySelector('#reset');
+  const ville = document.createElement('h1');
+  ville.classList = ('text-4xl font-bold');
+  const temperature = document.createElement('h2');
+  temperature.classList = ('font-bold');
+  const description = document.createElement('h2');
+  description.classList = ('text-xl font-bold');
+  const windSpeed = document.createElement('h2');
+  windSpeed.classList = ('font-bold');
+  const humidity = document.createElement('h2');
+  humidity.classList = ('font-bold');
+  const icon = document.createElement('img');
 
 const card = document.createElement('div');  
 card.classList = ('card w-full bg-base-100 card-md shadow-xl card-border hidden');
@@ -45,42 +33,35 @@ icon.classList = ('absolute top-0 right-0 w-1/2 h-1/2');
   const my_modal = document.querySelector('#my_modal_5');
 
   submit.addEventListener('click', () => {
-    const city = cityInput.value;
+    card.classList.add('hidden');
+   const city = cityInput.value;
 
-    if (city === '') {
-      my_modal.showModal();
-      return;
-    } else {
-      // Suivre l'événement avec Vercel Analytics
-      trackEvent('City Search', {
-        city: city,
-        timestamp: new Date().toISOString(),
-      });
-
-      // Votre logique existante
-      root.appendChild(card);
-      card.classList.remove('hidden');
-      cityInput.value = '';
-      cardBody.appendChild(icon);
-
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`)
-        .then((Response) => Response.json())
-        .then((data) => {
-          ville.textContent = data.name;
-          temperature.textContent = 'Temperature :' + ' ' + data.main.temp + '°C';
-          windSpeed.textContent = 'Vitesse du vent :' + ' ' + data.wind.speed + 'km/h';
-          humidity.textContent = 'Humidité :' + ' ' + data.main.humidity + '%';
-          description.textContent = data.weather[0].description;
-          icon.src = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
-          icon.style.width = '100px';
-          icon.style.height = '100px';
-          icon.style.borderRadius = '50%';
-        })
-        .catch((error) => {
-          console.log('erreur :', error);
-        });
-    }
-  });
+   if (city === '') {
+    my_modal.showModal();
+    return;
+   }else {
+    root.appendChild(card);
+    card.classList.remove('hidden');
+    cityInput.value = '';
+    cardBody.appendChild(icon);
+  
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`)
+      .then(Response => Response.json())
+      .then( data => {
+        ville.textContent = data.name;
+        temperature.textContent ='Temperature :' + ' ' + data.main.temp + '°C';
+        windSpeed.textContent ='Vitesse du vent :' + ' ' + data.wind.speed + 'km/h';
+        humidity.textContent = 'Humidité :' + ' ' + data.main.humidity + '%';
+        description.textContent = data.weather[0].description;
+        icon.src = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
+        icon.style.width = '100px';
+        icon.style.height = '100px';
+        icon.style.borderRadius = '50%';
+      })
+      .catch(error => {
+        console.log('erreur :', error)
+      });}
+  })
 
   reset.addEventListener('click', () => {
     card.classList.add('hidden')
