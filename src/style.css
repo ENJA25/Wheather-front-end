@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: garden --default, sunset;
+  themes: pastel --default, forest;
 }
 
 /* Modale */
